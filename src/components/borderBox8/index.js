@@ -1,4 +1,4 @@
-import React, { useState, useMemo, forwardRef } from 'react'
+import React, { useState, useMemo, forwardRef, useRef } from 'react'
 
 import PropTypes from 'prop-types'
 
@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import { deepMerge } from '@jiaminghi/charts/lib/util/index'
 import { deepClone } from '@jiaminghi/c-render/lib/plugin/util'
 
-import useAutoResize from '../../use/autoResize'
+import { useSize } from 'ahooks';
 
 import { uuid } from '../../util'
 
@@ -27,8 +27,10 @@ const BorderBox = forwardRef((
   },
   ref
 ) => {
-  const { width, height, domRef } = useAutoResize(ref)
-
+  const domRef = useRef();
+  const size = useSize(domRef);
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
   const [{ path, gradient, mask }] = useState(() => {
     const id = uuid()
 

@@ -8,7 +8,7 @@ import { deepMerge } from '@jiaminghi/charts/lib/util/index'
 import { deepClone } from '@jiaminghi/c-render/lib/plugin/util'
 import { fade } from '@jiaminghi/color'
 
-import useAutoResize from '../../use/autoResize'
+import { useSize } from 'ahooks';
 
 import { uuid } from '../../util'
 
@@ -19,7 +19,10 @@ const defaultColor = ['#8aaafb', '#1f33a2']
 const BorderBox = forwardRef(({ children, className, style, color = [], titleWidth = 250, title = '', backgroundColor = 'transparent' }, ref) => {
   const filterId = useRef(`border-box-11-filterId-${uuid()}`).current
 
-  const { width, height, domRef } = useAutoResize(ref)
+  const domRef = useRef();
+  const size = useSize(domRef);
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
 
   const mergedColor = useMemo(() => deepMerge(deepClone(defaultColor, true), color || []), [color])
 

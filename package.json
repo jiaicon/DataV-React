@@ -20,7 +20,8 @@
     "prepare": "yarn run build"
   },
   "dependencies": {
-    "@jiaminghi/charts": "^0.2"
+    "@jiaminghi/charts": "^0.2",
+    "ahooks": "^3.5.1"
   },
   "peerDependencies": {
     "react": "^16.8.0",
