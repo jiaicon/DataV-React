@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import { deepMerge } from '@jiaminghi/charts/lib/util/index'
 import { deepClone } from '@jiaminghi/c-render/lib/plugin/util'
 
-import useAutoResize from '../../use/autoResize'
+import { useSize } from 'ahooks';
 
 import { uuid } from '../../util'
 
@@ -16,7 +16,10 @@ import './style.less'
 const defaultColor = ['#00c2ff', 'rgba(0, 194, 255, 0.3)']
 
 const Decoration = forwardRef(({ className, style, color = [] }, ref) => {
-  const { width, height, domRef } = useAutoResize(ref)
+  const domRef = useRef();
+  const size = useSize(domRef);
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
 
   const {
     animationId1,

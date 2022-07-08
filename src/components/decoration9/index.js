@@ -10,7 +10,7 @@ import { deepMerge } from '@jiaminghi/charts/lib/util'
 
 import { deepClone } from '@jiaminghi/c-render/lib/plugin/util'
 
-import useAutoResize from '../../use/autoResize'
+import { useSize } from 'ahooks';
 
 import { uuid } from '../../util'
 
@@ -21,7 +21,10 @@ const defaultColor = ['rgba(3, 166, 224, 0.8)', 'rgba(3, 166, 224, 0.5)']
 const svgWH = [100, 100]
 
 const Decoration = forwardRef(({ children, className, style, color = [], dur = 3 }, ref) => {
-  const { width, height, domRef } = useAutoResize(ref)
+  const domRef = useRef();
+  const size = useSize(domRef);
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
 
   const polygonIdRef = useRef(`decoration-9-polygon-${uuid()}`)
 

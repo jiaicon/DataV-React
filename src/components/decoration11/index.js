@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef } from 'react'
+import React, { useMemo, forwardRef, useRef } from 'react'
 
 import PropTypes from 'prop-types'
 
@@ -8,14 +8,17 @@ import { deepMerge } from '@jiaminghi/charts/lib/util/index'
 import { deepClone } from '@jiaminghi/c-render/lib/plugin/util'
 import { fade } from '@jiaminghi/color'
 
-import useAutoResize from '../../use/autoResize'
+import { useSize } from 'ahooks';
 
 import './style.less'
 
 const defaultColor = ['#1a98fc', '#2cf7fe']
 
 const BorderBox = forwardRef(({ children, className, style, color = [] }, ref) => {
-  const { width, height, domRef } = useAutoResize(ref)
+  const domRef = useRef();
+  const size = useSize(domRef);
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
 
   const mergedColor = useMemo(() => deepMerge(deepClone(defaultColor, true), color || []), [color])
 

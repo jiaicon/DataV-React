@@ -1,4 +1,4 @@
-import React, { useMemo, forwardRef } from 'react'
+import React, { useMemo, forwardRef, useRef } from 'react'
 
 import PropTypes from 'prop-types'
 
@@ -7,14 +7,17 @@ import classnames from 'classnames'
 import { deepMerge } from '@jiaminghi/charts/lib/util/index'
 import { deepClone } from '@jiaminghi/c-render/lib/plugin/util'
 
-import useAutoResize from '../../use/autoResize'
+import { useSize } from 'ahooks';
 
 import './style.less'
 
 const defaultColor = ['#3faacb', '#fff']
 
 const Decoration = forwardRef(({ reverse = false, dur = 6, className, style, color = [] }, ref) => {
-  const { width, height, domRef } = useAutoResize(ref)
+  const domRef = useRef();
+  const size = useSize(domRef);
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
 
   function calcSVGData() {
     return reverse

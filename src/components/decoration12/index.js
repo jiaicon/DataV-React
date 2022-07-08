@@ -8,7 +8,7 @@ import { deepMerge } from '@jiaminghi/charts/lib/util/index'
 import { deepClone, getCircleRadianPoint } from '@jiaminghi/c-render/lib/plugin/util'
 import { fade } from '@jiaminghi/color'
 
-import useAutoResize from '../../use/autoResize'
+import { useSize } from 'ahooks';
 import { uuid } from '../../util'
 
 import './style.less'
@@ -26,7 +26,10 @@ const ringWidth = 1
 const showSplitLine = true
 
 const BorderBox = forwardRef(({ children, className, style, color = [], scanDur = 3, haloDur = 2 }, ref) => {
-  const { width, height, domRef } = useAutoResize(ref)
+  const domRef = useRef();
+  const size = useSize(domRef);
+  const width = size ? size.width : 0;
+  const height = size ? size.height : 0;
 
   const x = width / 2
 
